@@ -46,7 +46,7 @@ const changeTurn = () => {
   turn = turn === p1 ? p2 : p1;
 };
 const init = () => {
-  board = rray(9).fill(null);
+  board = Array(9).fill(null);
   render();
   p1 = prompt('P1 enter name: ');
   p2 = prompt('P2 enter name: ');
