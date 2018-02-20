@@ -1,8 +1,21 @@
 let p1 = null; // play the X's
 let p2 = null; // play the O's
 let turn = null;
-let board = Array(9).fill(null);
+let board = null;
 
+const play = () => {
+  const mark = turn === p1 ? 'X' : 'O';
+  let square = null;
+  // play the thing
+  while (![0, 1, 2, 3, 4, 5, 6, 7, 8].includes(parseInt(square)) || board[parseInt(square)]) {
+    square = prompt(`${turn}'s turn (${mark}'s). Please input a square from 0-8 (\'quit\' to quit):`);
+    if (square === 'quit') {
+      turn = null;
+      return;
+    }
+  }
+  board[parseInt(square)] = mark;
+};
 const render = () => {
   const display = board.map(item => item ? ` ${item} ` : '   ');
   console.log(
@@ -28,21 +41,12 @@ const checkWin = () => {
     turn = null;
   }
 };
-const play = () => {
-  const mark = turn === p1 ? 'X' : 'O';
-  let square = null;
-  // play the thing
-  while (![0, 1, 2, 3, 4, 5, 6, 7, 8].includes(parseInt(square)) || board[parseInt(square)]) {
-    square = prompt(`${turn}'s turn (${mark}'s). Please input a square from 0-8:`);
-    if (square === '') { // debugging
-      turn = null;
-      return;
-    }
-  }
-  board[parseInt(square)] = mark;
+const changeTurn = () => {
+  if (turn === null) return;
+  turn = turn === p1 ? p2 : p1;
 };
-const changeTurn = () => turn = turn === p1 ? p2 : p1;
 const init = () => {
+  board = rray(9).fill(null);
   render();
   p1 = prompt('P1 enter name: ');
   p2 = prompt('P2 enter name: ');
@@ -50,8 +54,8 @@ const init = () => {
   while (turn) {
     play();
     render();
-    changeTurn();
     checkWin();
+    changeTurn();
   }
 };
 
